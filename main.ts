@@ -32,7 +32,7 @@ export default class MyPlugin extends Plugin {
 		await this.loadSettings();
 		this.addCommand({
 			id: 'yaml-templater-editor-command',
-			name: 'Insert template (EDITOR)',
+			name: 'Insert template',
 			editorCallback: (editor: Editor, view: MarkdownView) => {
 
 				if (!this.checkModalCondition()) { return; }
@@ -87,7 +87,7 @@ class TemplateSuggest extends FuzzySuggestModal<TFile> {
 			(text) => {
 				console.log(text);
 				const reg = /{{([a-zA-Z-]+)}}/g;
-				const replaced = text.replace(reg, (m, i) => (i in this.vars && this.vars[i] != undefined) ? this.vars[i] : "{{not found}}");
+				const replaced = text.replace(reg, (m, i) => (i in this.vars && this.vars[i] != undefined) ? this.vars[i].trim() : "{{not found}}");
 				console.log(replaced);
 				this.editor.replaceSelection(replaced);
 			}
